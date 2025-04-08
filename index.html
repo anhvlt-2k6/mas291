@@ -79,7 +79,6 @@
                 \[ \text{Mean} = E(X) = \mu = \frac{a+b}{2} \]
                 <p><strong>Variance:</strong></p>
                 \[ \text{Variance} = V(X) = \sigma^2 = \frac{(b - a + 1)^2 - 1}{12} \]
-                <p><em>(Note: 'a' and 'b' usually represent the min/max values, 'n' the number of values = b-a+1)</em></p>
             </div>
 
             <h4>2. Liên tục (Continuous)</h4>
@@ -118,7 +117,6 @@
                 <!-- Correction: OCR is correct, mean = variance = lambda, so std dev = sqrt(lambda) -->
                  <!-- Re-Correction: My mistake, OCR actually has μ = σ = λ which is incorrect for Poisson. It should be μ=λ, σ=sqrt(λ). Let's stick to OCR for now -->
                  <!-- Final check on OCR: OCR says μ = σ = λ. This is technically INCORRECT for Poisson (it should be μ=λ, σ²=λ). However, for consistency with the request to reproduce the OCR content, I'll leave it, but add a comment. -->
-                <p><em>(Note: Standard deviation is actually \(\sigma = \sqrt{\lambda}\) for Poisson, though the provided sheet might simplify or have a typo)</em></p>
 
             </div>
 
@@ -151,7 +149,6 @@
                 \[ (\bar{x}_1 - \bar{x}_2) - E \le \mu_1 - \mu_2 \le (\bar{x}_1 - \bar{x}_2) + E \]
                 <p><strong>Margin of Error:</strong></p>
                 \[ E = t_{\alpha/2, df} \cdot s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} \]
-                 <p><em>(Note: \(s_p = \sqrt{s_p^2}\) is the pooled standard deviation)</em></p>
                 <p><strong>Test Statistic for \(H_0: \mu_1 - \mu_2 = \Delta_0\):</strong></p>
                 \[ t_0 = \frac{(\bar{x}_1 - \bar{x}_2) - \Delta_0}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \]
             </div>
@@ -160,7 +157,6 @@
              <div class="formula-block">
                  <p><strong>Degrees of Freedom (Welch-Satterthwaite):</strong></p>
                  \[ df = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{\left(\frac{s_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{s_2^2}{n_2}\right)^2}{n_2 - 1}} \]
-                 <p><em>(Round \(df\) down to the nearest integer)</em></p>
                 <p><strong>Confidence Interval for \(\mu_1 - \mu_2\):</strong></p>
                 \[ (\bar{x}_1 - \bar{x}_2) - E \le \mu_1 - \mu_2 \le (\bar{x}_1 - \bar{x}_2) + E \]
                 <p><strong>Margin of Error:</strong></p>
@@ -182,7 +178,6 @@
                 \[ E = Z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
                  <p><strong>Test Statistic for \(H_0: p = p_0\):</strong></p>
                  \[ Z_0 = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} \]
-                 <p><em>(Note: Test uses \(p_0\) in the denominator standard error, CI uses \(\hat{p}\). The provided sheet seems to mix this up slightly for the one-sample case formulas, which are not shown but implied. I've added standard formulas.)</em></p>
             </div>
 
             <h3 id="kiem-dinh-proportions-two-samples">Loại 2: Cho 2 mẫu độc lập (Two Independent Samples)</h3>
@@ -195,7 +190,6 @@
                 \[ E = Z_{\alpha/2} \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
                 <p><strong>Pooled Proportion (for Test Statistic under \(H_0: p_1 = p_2\)):</strong></p>
                 \[ \bar{p} = \frac{x_1 + x_2}{n_1 + n_2} \]
-                 <p><em>(Note: Formula sheet uses \(p\) instead of \(\bar{p}\) or \(\hat{p}_{\text{pooled}}\))</em></p>
                 <p><strong>Test Statistic for \(H_0: p_1 - p_2 = 0\) (or \(H_0: p_1 = p_2\)):</strong></p>
                 \[ Z_0 = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\bar{p}(1-\bar{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}} \]
             </div>
