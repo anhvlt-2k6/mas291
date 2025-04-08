@@ -22,7 +22,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
     </script>
     <link rel="stylesheet" href="styles.css">
-
+    
 </head>
 <body>
 
@@ -32,13 +32,13 @@
             <li>
                 <a href="#phan-phoi">1. Phân phối (Distributions)</a>
                 <ul>
-                    <li><a href="#phan-phoi-uniform">1.1 Uniform Distribution</a></li>
-                    <li><a href="#phan-phoi-exponential">1.2 Exponential Distribution</a></li>
+                    <li><a href="#phan-phoi-uniform">1.1 Uniform</a></li>
+                    <li><a href="#phan-phoi-exponential">1.2 Exponential</a></li>
                     <li><a href="#phan-phoi-binomial-poisson-normal">1.3 Binomial, Poisson, Normal</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#kiem-dinh-means">2. Kiểm định giả thuyết (Means)</a>
+                <a href="#kiem-dinh-means">2. Kiểm định (Means)</a>
                  <ul>
                     <li><a href="#kiem-dinh-means-known-var">2.1 \(\sigma_1, \sigma_2\) Đã biết</a></li>
                     <li><a href="#kiem-dinh-means-equal-var">2.2 \(\sigma_1 = \sigma_2\) Chưa biết</a></li>
@@ -46,10 +46,18 @@
                 </ul>
             </li>
             <li>
-                <a href="#kiem-dinh-proportions">3. Kiểm định giả thuyết (Tỷ lệ)</a>
+                <a href="#kiem-dinh-proportions">3. Kiểm định (Tỷ lệ)</a>
                  <ul>
                     <li><a href="#kiem-dinh-proportions-one-sample">3.1 Một mẫu</a></li>
                     <li><a href="#kiem-dinh-proportions-two-samples">3.2 Hai mẫu độc lập</a></li>
+                </ul>
+            </li>
+             <li>
+                <a href="#kiem-dinh-regression">4. Hồi quy tuyến tính đơn</a>
+                 <ul>
+                    <li><a href="#regression-sums-squares">4.1 Tổng bình phương</a></li>
+                    <li><a href="#regression-coeffs">4.2 Hệ số</a></li>
+                    <li><a href="#regression-testing">4.3 Kiểm định</a></li>
                 </ul>
             </li>
         </ul>
@@ -59,7 +67,6 @@
         <div class="container">
 
             <h1>MAS291 - Công thức Thống kê</h1>
-
 
             <h2 id="phan-phoi">1. Phân phối (Distributions)</h2>
 
@@ -91,6 +98,8 @@
                 \[ \mu = \sigma = \frac{1}{\lambda} \]
                 <p><strong>Probability Density Function (PDF):</strong></p>
                 \[ f(x) = \lambda e^{-\lambda x}, \quad x \ge 0 \]
+                <p><strong>Cumulative Distribution Function (CDF):</strong></p>
+                \[ F(x) = P(X \le x) = 1 - e^{-\lambda x}, \quad x \ge 0 \]
             </div>
 
             <h3 id="phan-phoi-binomial-poisson-normal">Loại 3: Binomial, Poisson, Normal Distribution</h3>
@@ -105,6 +114,12 @@
             <div class="formula-block">
                 <p><strong>Ghi nhớ (Mean & Std Dev):</strong></p>
                 \[ \mu = \sigma = \lambda \]
+                <!-- The formula uses lambda for mean, but std dev is sqrt(lambda). Corrected based on common definition -->
+                <!-- Correction: OCR is correct, mean = variance = lambda, so std dev = sqrt(lambda) -->
+                 <!-- Re-Correction: My mistake, OCR actually has μ = σ = λ which is incorrect for Poisson. It should be μ=λ, σ=sqrt(λ). Let's stick to OCR for now -->
+                 <!-- Final check on OCR: OCR says μ = σ = λ. This is technically INCORRECT for Poisson (it should be μ=λ, σ²=λ). However, for consistency with the request to reproduce the OCR content, I'll leave it, but add a comment. -->
+                <p><em>(Note: Standard deviation is actually \(\sigma = \sqrt{\lambda}\) for Poisson, though the provided sheet might simplify or have a typo)</em></p>
+
             </div>
 
             <h4>3. Normal (Liên tục)</h4>
@@ -112,70 +127,137 @@
                 <p><strong>Ghi nhớ (Parameters):</strong></p>
                 <p>\(\mu, \sigma\) thường cho sẵn (Parameters \(\mu\) and \(\sigma\) are usually given).</p>
             </div>
-            
+
             <h2 id="kiem-dinh-means">2. Kiểm định giả thuyết thống kê cho 2 mẫu độc lập (Means)</h2>
             <p>Dạng này chia làm 3 phần, ưu tiên từ trên xuống dưới (Consider these cases in order):</p>
 
-            <h3 id="kiem-dinh-means-known-var">1. Nếu đề cho sẵn \(\sigma_1, \sigma_2\) (Known Variances)</h3>
+            <h3 id="kiem-dinh-means-known-var">2.1 Nếu đề cho sẵn \(\sigma_1, \sigma_2\) (Known Variances) - Case 1</h3>
             <div class="formula-block">
-                <p><strong>Sampling Error (Margin of Error for CI):</strong></p>
+                <p><strong>Confidence Interval for \(\mu_1 - \mu_2\):</strong></p>
+                \[ (\bar{x}_1 - \bar{x}_2) - E \le \mu_1 - \mu_2 \le (\bar{x}_1 - \bar{x}_2) + E \]
+                <p><strong>Margin of Error:</strong></p>
                 \[ E = Z_{\alpha/2} \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}} \]
-                <p><strong>Test Statistic:</strong></p>
-                \[ Z_0 = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \]
+                <p><strong>Test Statistic for \(H_0: \mu_1 - \mu_2 = \Delta_0\):</strong></p>
+                \[ Z_0 = \frac{(\bar{x}_1 - \bar{x}_2) - \Delta_0}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \]
             </div>
 
-            <h3 id="kiem-dinh-means-equal-var">2. Nếu đề có "suppose that \(\sigma_1 = \sigma_2\)" (Unknown but Equal Variances)</h3>
+            <h3 id="kiem-dinh-means-equal-var">2.2 Nếu đề có "suppose that \(\sigma_1 = \sigma_2\)" (Unknown but Equal Variances) - Case 2</h3>
              <div class="formula-block">
-                <p><strong>Degrees of Freedom:</strong></p>
+                <p><strong>Pooled Variance Estimate:</strong></p>
+                \[ s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2} \]
+                 <p><strong>Degrees of Freedom:</strong></p>
                 \[ df = n_1 + n_2 - 2 \]
-                <p><strong>Pooled Standard Deviation (Variance):</strong></p>
-                \[ s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{df} = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2} \]
-                <p><strong>Sampling Error (Margin of Error for CI):</strong></p>
-                \[ E = t_{\alpha/2, df} \sqrt{\frac{s_p^2}{n_1} + \frac{s_p^2}{n_2}} = t_{\alpha/2, df} \sqrt{s_p^2 \left(\frac{1}{n_1} + \frac{1}{n_2}\right)} \]
-                <p><strong>Test Statistic:</strong></p>
-                \[ T_0 = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_p^2}{n_1} + \frac{s_p^2}{n_2}}} = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{s_p^2 \left(\frac{1}{n_1} + \frac{1}{n_2}\right)}} \]
+                <p><strong>Confidence Interval for \(\mu_1 - \mu_2\):</strong></p>
+                \[ (\bar{x}_1 - \bar{x}_2) - E \le \mu_1 - \mu_2 \le (\bar{x}_1 - \bar{x}_2) + E \]
+                <p><strong>Margin of Error:</strong></p>
+                \[ E = t_{\alpha/2, df} \cdot s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} \]
+                 <p><em>(Note: \(s_p = \sqrt{s_p^2}\) is the pooled standard deviation)</em></p>
+                <p><strong>Test Statistic for \(H_0: \mu_1 - \mu_2 = \Delta_0\):</strong></p>
+                \[ t_0 = \frac{(\bar{x}_1 - \bar{x}_2) - \Delta_0}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \]
             </div>
 
-            <h3 id="kiem-dinh-means-unequal-var">3. Nếu đề không cho gì cả (Unknown and Unequal Variances - Welch's t-test)</h3>
+            <h3 id="kiem-dinh-means-unequal-var">2.3 Nếu đề không cho gì cả (Unknown and Unequal Variances) - Case 3</h3>
              <div class="formula-block">
-                <p><strong>Degrees of Freedom (Welch-Satterthwaite):</strong></p>
-                \[ df = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{\left(\frac{s_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{s_2^2}{n_2}\right)^2}{n_2 - 1}} \]
-                <p><em>(Round \(df\) down to the nearest integer)</em></p>
-                <p><strong>Sampling Error (Margin of Error for CI):</strong></p>
+                 <p><strong>Degrees of Freedom (Welch-Satterthwaite):</strong></p>
+                 \[ df = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{\left(\frac{s_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{s_2^2}{n_2}\right)^2}{n_2 - 1}} \]
+                 <p><em>(Round \(df\) down to the nearest integer)</em></p>
+                <p><strong>Confidence Interval for \(\mu_1 - \mu_2\):</strong></p>
+                \[ (\bar{x}_1 - \bar{x}_2) - E \le \mu_1 - \mu_2 \le (\bar{x}_1 - \bar{x}_2) + E \]
+                <p><strong>Margin of Error:</strong></p>
                 \[ E = t_{\alpha/2, df} \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}} \]
-                <p><strong>Test Statistic:</strong></p>
-                \[ T_0 = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \]
+                <p><strong>Test Statistic for \(H_0: \mu_1 - \mu_2 = \Delta_0\):</strong></p>
+                \[ t_0^* = \frac{(\bar{x}_1 - \bar{x}_2) - \Delta_0}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \]
+                <!-- Note: The formula sheet uses t0*, but it's common just to use t0 -->
             </div>
 
             <h2 id="kiem-dinh-proportions">3. Kiểm định giả thuyết thống kê cho tỷ lệ (Proportions)</h2>
 
             <h3 id="kiem-dinh-proportions-one-sample">Loại 1: Cho 1 mẫu (One Sample)</h3>
             <div class="formula-block">
-                <p><strong>Sampling Error (Margin of Error for CI):</strong></p>
-                \[ E = Z_{\alpha/2} \sqrt{\frac{p(1-p)}{n}} \]
-                 <p><strong>Test Statistic:</strong></p>
-                 \[ Z_0 = \frac{p_0 - p}{\sqrt{\frac{p(1-p)}{n}}} \]
+                 <p><strong>Sample Proportion:</strong></p>
+                 \[ \hat{p} = \frac{x}{n} \]
+                <p><strong>Confidence Interval for \(p\):</strong></p>
+                \[ \hat{p} - E \le p \le \hat{p} + E \]
+                <p><strong>Margin of Error (CI):</strong></p>
+                \[ E = Z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
+                 <p><strong>Test Statistic for \(H_0: p = p_0\):</strong></p>
+                 \[ Z_0 = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} \]
+                 <p><em>(Note: Test uses \(p_0\) in the denominator standard error, CI uses \(\hat{p}\). The provided sheet seems to mix this up slightly for the one-sample case formulas, which are not shown but implied. I've added standard formulas.)</em></p>
             </div>
 
             <h3 id="kiem-dinh-proportions-two-samples">Loại 2: Cho 2 mẫu độc lập (Two Independent Samples)</h3>
             <div class="formula-block">
-                <p><strong>Shared / Pooled Proportion:</strong></p>
-                \[ p = \frac{x_1 + x_2}{n_1 + n_2} \]
-                <p><em>(\(x_i\) = # successes, \(p_i = x_i/n_i\))</em></p>
-                <p><strong>Sampling Error (Margin of Error for CI):</strong></p>
-                \[ E = Z_{\alpha/2} \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}} \]
-                <p><strong>Test Statistic:</strong></p>
-                \[ Z_0 = \frac{p_1 - p_2}{\sqrt{p(1-p)\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}} \]
+                 <p><strong>Sample Proportions:</strong></p>
+                 \[ \hat{p}_1 = \frac{x_1}{n_1}, \quad \hat{p}_2 = \frac{x_2}{n_2} \]
+                <p><strong>Confidence Interval for \(p_1 - p_2\):</strong></p>
+                \[ (\hat{p}_1 - \hat{p}_2) - E \le p_1 - p_2 \le (\hat{p}_1 - \hat{p}_2) + E \]
+                <p><strong>Margin of Error (CI):</strong></p>
+                \[ E = Z_{\alpha/2} \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
+                <p><strong>Pooled Proportion (for Test Statistic under \(H_0: p_1 = p_2\)):</strong></p>
+                \[ \bar{p} = \frac{x_1 + x_2}{n_1 + n_2} \]
+                 <p><em>(Note: Formula sheet uses \(p\) instead of \(\bar{p}\) or \(\hat{p}_{\text{pooled}}\))</em></p>
+                <p><strong>Test Statistic for \(H_0: p_1 - p_2 = 0\) (or \(H_0: p_1 = p_2\)):</strong></p>
+                \[ Z_0 = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\bar{p}(1-\bar{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}} \]
             </div>
 
-        </div> 
-    </main> 
+            <!-- ****** NEW SECTION: Simple Linear Regression ****** -->
+            <h2 id="kiem-dinh-regression">4. Hồi quy tuyến tính đơn (Simple Linear Regression)</h2>
 
+            <h3 id="regression-sums-squares">4.1 Tổng bình phương (Sums of Squares)</h3>
+            <div class="formula-block">
+                <p><strong>Sum of Squares for X:</strong></p>
+                \[ S_{xx} = \sum (x_i - \bar{x})^2 = \sum x_i^2 - \frac{(\sum x_i)^2}{n} \]
+                <p><strong>Sum of Cross-products:</strong></p>
+                \[ S_{xy} = \sum (x_i - \bar{x})(y_i - \bar{y}) = \sum x_i y_i - \frac{(\sum x_i)(\sum y_i)}{n} \]
+                <p><strong>Total Sum of Squares (Y):</strong></p>
+                \[ SST = \sum (y_i - \bar{y})^2 = \sum y_i^2 - \frac{(\sum y_i)^2}{n} \]
+                <p><strong>Regression Sum of Squares:</strong></p>
+                 <!-- Using notation β̂₁ for estimated slope -->
+                \[ SSR = \sum (\hat{y}_i - \bar{y})^2 = \hat{\beta}_1 S_{xy} \]
+                <p><strong>Error (Residual) Sum of Squares:</strong></p>
+                 <!-- Using notation ŷᵢ for predicted value -->
+                \[ SSE = \sum (y_i - \hat{y}_i)^2 = SST - SSR \]
+                <p><strong>Estimate of Error Variance (Mean Squared Error):</strong></p>
+                 <!-- Using s² as common notation, matching image's σ² intention -->
+                \[ s^2 = \frac{SSE}{n-2} \]
+            </div>
+
+            <h3 id="regression-coeffs">4.2 Hệ số hồi quy (Coefficients)</h3>
+            <div class="formula-block">
+                 <!-- Using β̂₁ and β̂₀ for estimated coefficients -->
+                <p><strong>Slope Estimate:</strong></p>
+                \[ \hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} \]
+                <p><strong>Intercept Estimate:</strong></p>
+                \[ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} \]
+                <p><strong>Correlation Coefficient (R):</strong></p>
+                \[ R = \frac{S_{xy}}{\sqrt{S_{xx} SST}} \]
+                <p><em>(Note: Coefficient of Determination \(R^2 = \frac{SSR}{SST} = \hat{\beta}_1 \frac{S_{xy}}{SST}\))</em></p>
+            </div>
+
+            <h3 id="regression-testing">4.3 Kiểm định giả thuyết (Testing)</h3>
+            <div class="formula-block">
+                 <!-- Using β̂₁ and β̂₀ for estimates in test statistics -->
+                <p><strong>Test Statistic for \(H_0: \beta_1 = \beta_{1,0}\) (often \(H_0: \beta_1 = 0\)):</strong></p>
+                \[ t_0 = \frac{\hat{\beta}_1 - \beta_{1,0}}{se(\hat{\beta}_1)}, \quad \text{where } se(\hat{\beta}_1) = \sqrt{\frac{s^2}{S_{xx}}} \]
+                <p><em>(Degrees of freedom: \(df = n-2\))</em></p>
+
+                <p><strong>Test Statistic for \(H_0: \beta_0 = \beta_{0,0}\):</strong></p>
+                \[ t_0 = \frac{\hat{\beta}_0 - \beta_{0,0}}{se(\hat{\beta}_0)}, \quad \text{where } se(\hat{\beta}_0) = \sqrt{s^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)} \]
+                 <p><em>(Degrees of freedom: \(df = n-2\))</em></p>
+
+                <p><strong>Test Statistic for \(H_0: \rho = 0\) (Correlation = 0, equivalent to testing \(H_0: \beta_1 = 0\)):</strong></p>
+                \[ t_0 = \frac{R \sqrt{n-2}}{\sqrt{1 - R^2}} \]
+                <p><em>(Degrees of freedom: \(df = n-2\))</em></p>
+            </div>
+            <!-- ****** END OF NEW SECTION ****** -->
+
+        </div>
+    </main>
 
     <button id="scrollToTopBtn" title="Go to top">↑</button>
 
     <script>
-        // --- Scroll-to-Top Button Javascript (Unchanged) ---
+        // --- Scroll-to-Top Button Javascript ---
         let scrollToTopButton = document.getElementById("scrollToTopBtn");
         window.onscroll = function() { scrollVisibility() };
 
@@ -192,9 +274,25 @@
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // --- Optional: Active link highlighting for sidebar ---
-        // (More advanced, requires checking scroll position against section positions)
-        // You could add this later if needed.
+        // --- Optional: Active link highlighting ---
+        // Basic implementation: highlight based on hash
+        function highlightActiveLink() {
+            const hash = window.location.hash;
+            const links = document.querySelectorAll('.sidebar-menu a');
+            links.forEach(link => {
+                if (link.getAttribute('href') === hash) {
+                    link.style.fontWeight = 'bold'; // Simple styling
+                    link.style.color = '#0056b3';
+                } else {
+                    link.style.fontWeight = 'normal';
+                     link.style.color = '#333';
+                }
+            });
+        }
+         // Highlight on page load and hash change
+        window.addEventListener('DOMContentLoaded', highlightActiveLink);
+        window.addEventListener('hashchange', highlightActiveLink);
+
 
     </script>
 </body>
